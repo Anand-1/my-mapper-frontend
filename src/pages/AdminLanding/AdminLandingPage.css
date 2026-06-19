@@ -1,0 +1,48 @@
+.admin-landing {
+  display: grid;
+  color: var(--text-h);
+}
+
+.admin-landing__content {
+  width: min(100%, 860px);
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  gap: 18px;
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+
+.admin-landing h1 {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(40px, 7vw, 72px);
+  line-height: 1;
+}
+
+.admin-landing__copy {
+  max-width: 620px;
+  margin: 0;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.admin-landing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.admin-landing__loading {
+  place-self: center;
+  color: var(--text);
+  font-weight: 800;
+}
+
+@media (max-width: 560px) {
+  .admin-landing h1 {
+    font-size: 40px;
+  }
+}

@@ -1,0 +1,114 @@
+.app-nav {
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  box-sizing: border-box;
+}
+
+.app-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 10px;
+  color: var(--text-h);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.app-nav__mark {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  border-radius: 6px;
+  background: var(--accent);
+}
+
+.app-nav__links {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--social-bg);
+}
+
+.app-nav__links a {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.app-nav__links a.active {
+  color: var(--text-h);
+  background: var(--bg);
+  box-shadow: 0 6px 14px rgba(8, 6, 13, 0.08);
+}
+
+.app-nav__account {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 10px;
+}
+
+.app-nav__user {
+  max-width: 180px;
+  overflow: hidden;
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-nav__login,
+.app-nav__account button {
+  min-height: 38px;
+}
+
+@media (max-width: 760px) {
+  .app-nav {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+    gap: 12px;
+    padding: 14px 20px;
+  }
+
+  .app-nav__brand,
+  .app-nav__account {
+    justify-self: stretch;
+  }
+
+  .app-nav__account {
+    justify-content: space-between;
+  }
+
+  .app-nav__links {
+    width: 100%;
+  }
+
+  .app-nav__links a {
+    flex: 1;
+  }
+}
