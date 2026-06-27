@@ -128,7 +128,7 @@ const LoginPage = () => {
         </form>
 
         <p className="login-panel__footer">
-          New here? <Link to="/">Start from home</Link>
+          New here? <Link to="/register">Create an account</Link>
         </p>
       </section>
     </main>

@@ -66,6 +66,28 @@ export const logout = async () => {
   });
 };
 
+export const registerUser = async (user: {
+  name: string;
+  email: string;
+  password: string;
+}): Promise<void> => {
+  const response = await fetch(`${apiBaseUrl}/auth/register`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    throw new Error(
+      body?.error || "Unable to register user. Please try again."
+    );
+  }
+};
+
 export const getNavUser = async (): Promise<NavUser | null> => {
   const admin = getStoredAdmin();
 
