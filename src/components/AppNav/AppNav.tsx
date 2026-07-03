@@ -11,12 +11,17 @@ const AppNav = () => {
         <span className="app-nav__mark" aria-hidden="true">M</span>
         <span>My Mapper</span>
       </Link>
-
-      <nav className="app-nav__links" aria-label="Primary navigation">
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/dashboard">Dashboard</NavLink>
-        <NavLink to="/further">Tools</NavLink>
-      </nav>
+      {
+        user && (
+          <nav className="app-nav__links">
+            <nav className="app-nav__links" aria-label="Primary navigation">
+              <NavLink to="/home">Home</NavLink>
+              <NavLink to="/dashboard">Dashboard</NavLink>
+              <NavLink to="/further">Tools</NavLink>
+            </nav>
+          </nav>
+        )
+      }
 
       <div className="app-nav__account">
         {user ? (

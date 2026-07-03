@@ -6,13 +6,15 @@ import HomePage from './pages/Home/HomePage'
 import LoginPage from './pages/Login/LoginPage'
 import RegisterPage from './pages/Register/RegisterPage'
 import ToolsPage from './pages/Tools/ToolsPage'
+import LandingPage from './pages/Landing/LandingPage'
 
 function App() {
   return (
     <>
       <AppNav />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<AdminLandingPage />} />

@@ -58,7 +58,7 @@ const LoginPage = () => {
 
         <form className="login-form" onSubmit={formik.handleSubmit}>
           <label className="app-form-field">
-            <span>Admin username</span>
+            <span>Username</span>
             <input
               id="username"
               name="username"
@@ -66,7 +66,7 @@ const LoginPage = () => {
               value={formik.values.username}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              placeholder="admin"
+              placeholder="Enter your username"
               autoComplete="username"
               aria-invalid={formik.touched.username && Boolean(formik.errors.username)}
               aria-describedby={
