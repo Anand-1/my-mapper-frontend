@@ -1,6 +1,9 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
+permissions:
+  contents: write # Grants the workflow permission to read and write to the repository
+  pull-requests: write # Add this if your action creates pull requests
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
