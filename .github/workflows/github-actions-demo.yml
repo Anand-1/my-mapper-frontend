@@ -16,7 +16,6 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-name: Build and Deploy React App to GitHub Pages
 on:
   push:
     branches: [ "main" ]
