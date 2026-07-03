@@ -66,6 +66,27 @@ export const logout = async () => {
   });
 };
 
+export const loginUser = async (credentials: {
+  username: string;
+  password: string;
+}): Promise<void> => {
+  const response = await fetch(`${apiBaseUrl}/auth/login`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    throw new Error(
+      body?.error || "Unable to log in. Please check your credentials.",
+    );
+  }
+};
+
 export const registerUser = async (user: {
   name: string;
   email: string;

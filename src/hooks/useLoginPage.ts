@@ -1,9 +1,10 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { adminCredentials, apiBaseUrl } from "../services/config";
+import { apiBaseUrl } from "../services/config";
 import {
   getCurrentUser,
+  loginUser,
   saveAdminSession,
   type AuthenticatedUser,
 } from "../services/authService";
@@ -67,19 +68,25 @@ export const useLoginPage = () => {
 
       return errors;
     },
-    onSubmit: (values) => {
-      const isAdmin =
-        values.username === adminCredentials.username &&
-        values.password === adminCredentials.password;
-
-      if (!isAdmin) {
-        setLoginError("Invalid admin username or password.");
-        return;
-      }
-
+    onSubmit: async (values) => {
       saveAdminSession(values.username);
       setLoginError("");
-      navigate("/dashboard");
+      try {
+        await loginUser({
+          username: formik.values.username,
+          password: formik.values.password
+        });
+
+        navigate("/dashboard");
+      } catch (error) {
+        setLoginError(
+          error instanceof Error
+            ? error.message
+            : "Unable to create account. Please try again."
+        );
+      } finally {
+        // setIsSubmitting(false);
+      }
     },
   });
 
