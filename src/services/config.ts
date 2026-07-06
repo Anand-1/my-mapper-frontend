@@ -4,3 +4,10 @@ export const adminCredentials = {
   username: import.meta.env.VITE_ADMIN_USERNAME || "admin",
   password: import.meta.env.VITE_ADMIN_PASSWORD || "admin123",
 };
+
+export const tealiumConfig = {
+  account: import.meta.env.VITE_TEALIUM_ACCOUNT || "",
+  profile: import.meta.env.VITE_TEALIUM_PROFILE || "",
+  environment: import.meta.env.VITE_TEALIUM_ENVIRONMENT || "dev",
+  enabled: import.meta.env.VITE_TEALIUM_ENABLED !== "false",
+};

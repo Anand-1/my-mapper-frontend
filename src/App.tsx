@@ -7,10 +7,12 @@ import LoginPage from './pages/Login/LoginPage'
 import RegisterPage from './pages/Register/RegisterPage'
 import ToolsPage from './pages/Tools/ToolsPage'
 import LandingPage from './pages/Landing/LandingPage'
+import TealiumRouteTracker from './components/TealiumRouteTracker/TealiumRouteTracker'
 
 function App() {
   return (
     <>
+      <TealiumRouteTracker />
       <AppNav />
       <Routes>
         <Route path="/" element={<LandingPage />} />

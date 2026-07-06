@@ -1,5 +1,18 @@
 # React + TypeScript + Vite
 
+## Tealium
+
+Tag management is wired through Tealium iQ. Configure it with Vite environment variables:
+
+```env
+VITE_TEALIUM_ACCOUNT=your-account
+VITE_TEALIUM_PROFILE=your-profile
+VITE_TEALIUM_ENVIRONMENT=dev
+VITE_TEALIUM_ENABLED=true
+```
+
+When `VITE_TEALIUM_ACCOUNT` and `VITE_TEALIUM_PROFILE` are set, the app loads `utag.js` and sends a `page_view` event on each React Router navigation. Use `trackTealiumEvent` from `src/services/tealiumService.ts` for custom link/event tracking.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
