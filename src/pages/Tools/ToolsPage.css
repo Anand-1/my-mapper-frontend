@@ -1,0 +1,138 @@
+.tools {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.tools__content {
+  width: min(100%, 760px);
+  display: grid;
+  gap: 20px;
+  text-align: left;
+}
+
+.tools__content h1 {
+  margin: 0;
+  text-align: center;
+}
+
+.tools__form {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, 180px) minmax(140px, 180px) auto;
+  align-items: end;
+  gap: 12px;
+}
+
+.tools__form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tools__status {
+  color: var(--success);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.tools__entries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tools-entry {
+  min-width: 160px;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  color: var(--text-h);
+  font: inherit;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition:
+    border-color 140ms ease,
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.tools-entry:hover {
+  border-color: var(--accent-border);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(8, 6, 13, 0.08);
+}
+
+.tools-entry > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.tools-entry span {
+  font-size: 15px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.tools-entry time {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tools-entry__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.tools-entry__actions .app-button {
+  min-height: 34px;
+  padding-inline: 12px;
+}
+
+.tools-entry__delete {
+  color: var(--danger);
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+
+.tools-entry--violet {
+  background: rgba(170, 59, 255, 0.1);
+}
+
+.tools-entry--green {
+  background: rgba(21, 128, 61, 0.1);
+}
+
+.tools-entry--amber {
+  background: rgba(217, 119, 6, 0.12);
+}
+
+.tools-entry--blue {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.tools-entry--rose {
+  background: rgba(225, 29, 72, 0.1);
+}
+
+@media (max-width: 760px) {
+  .tools__form {
+    grid-template-columns: 1fr;
+  }
+
+  .tools__form-actions {
+    display: grid;
+  }
+
+  .tools__form .app-button {
+    width: 100%;
+  }
+
+  .tools-entry {
+    width: 100%;
+  }
+}
