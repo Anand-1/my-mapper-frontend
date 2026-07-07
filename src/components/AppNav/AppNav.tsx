@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useAppNav } from "../../hooks/useAppNav";
+import { appRoutes } from "../../routes";
 import "./AppNav.css";
 
 const AppNav = () => {
@@ -7,21 +8,17 @@ const AppNav = () => {
 
   return (
     <header className="app-nav">
-      <Link className="app-nav__brand" to="/">
+      <Link className="app-nav__brand" to={appRoutes.home}>
         <span className="app-nav__mark" aria-hidden="true">M</span>
         <span>My Mapper</span>
       </Link>
-      {
-        user && (
-          <nav className="app-nav__links">
-            <nav className="app-nav__links" aria-label="Primary navigation">
-              <NavLink to="/home">Home</NavLink>
-              <NavLink to="/dashboard">Dashboard</NavLink>
-              <NavLink to="/further">Tools</NavLink>
-            </nav>
-          </nav>
-        )
-      }
+      <nav className="app-nav__links" aria-label="Primary navigation">
+        <NavLink to={appRoutes.home}>Home</NavLink>
+        {user ? (
+          <NavLink to={appRoutes.dashboard}>Dashboard</NavLink>
+        ) : null}
+        <NavLink to={appRoutes.tools}>Tools</NavLink>
+      </nav>
 
       <div className="app-nav__account">
         {user ? (
@@ -41,7 +38,7 @@ const AppNav = () => {
         ) : (
           <Link
             className="app-nav__login app-action-link app-action-link--primary"
-            to="/login"
+            to={appRoutes.login}
           >
             Log in
           </Link>

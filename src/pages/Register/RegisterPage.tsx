@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { appRoutes } from "../../routes";
 import { useRegisterPage } from "../../hooks/useRegisterPage";
 import "../Login/LoginPage.css";
 
@@ -127,7 +128,7 @@ const RegisterPage = () => {
         </form>
 
         <p className="login-panel__footer">
-          Already have an account? <Link to="/login">Log in</Link>
+          Already have an account? <Link to={appRoutes.login}>Log in</Link>
         </p>
       </section>
     </main>

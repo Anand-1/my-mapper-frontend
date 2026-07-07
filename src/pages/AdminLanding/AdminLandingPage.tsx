@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { appRoutes } from "../../routes";
 import { useAdminLandingPage } from "../../hooks/useAdminLandingPage";
 import "./AdminLandingPage.css";
 
@@ -24,8 +25,8 @@ const AdminLandingPage = () => {
         </p>
 
         <div className="admin-landing__actions">
-          <Link className="app-action-link app-action-link--primary" to="/">Open mapper</Link>
-          <Link className="app-action-link" to="/further">View tools</Link>
+          <Link className="app-action-link app-action-link--primary" to={appRoutes.home}>Open mapper</Link>
+          <Link className="app-action-link" to={appRoutes.tools}>View tools</Link>
         </div>
       </section>
     </main>

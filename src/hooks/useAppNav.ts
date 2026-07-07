@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { appRoutes } from "../routes";
 import { getNavUser, logout, type NavUser } from "../services/authService";
 
 export const useAppNav = () => {
@@ -28,7 +29,7 @@ export const useAppNav = () => {
     } finally {
       setUser(null);
       setIsLoggingOut(false);
-      navigate("/login");
+      navigate(appRoutes.login);
     }
   };
 

@@ -54,7 +54,7 @@ test("navigates to tools from the primary nav", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Tools" }).click();
 
-  await expect(page).toHaveURL("/further");
+  await expect(page).toHaveURL("/tools");
   await expect(page.getByRole("heading", { name: "Further Components" })).toBeVisible();
 });
 

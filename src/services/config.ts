@@ -11,3 +11,6 @@ export const tealiumConfig = {
   environment: import.meta.env.VITE_TEALIUM_ENVIRONMENT || "dev",
   enabled: import.meta.env.VITE_TEALIUM_ENABLED !== "false",
 };
+
+export const routerBasePath =
+  import.meta.env.VITE_ROUTER_BASE || (import.meta.env.PROD ? import.meta.env.BASE_URL : "/");

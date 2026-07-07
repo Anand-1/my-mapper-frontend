@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { appRoutes } from "../../routes";
 import { useLoginPage } from "../../hooks/useLoginPage";
 import "./LoginPage.css";
 
@@ -58,7 +59,7 @@ const LoginPage = () => {
 
         <form className="login-form" onSubmit={formik.handleSubmit}>
           <label className="app-form-field">
-            <span>Username</span>
+            <span>Admin username</span>
             <input
               id="username"
               name="username"
@@ -128,7 +129,7 @@ const LoginPage = () => {
         </form>
 
         <p className="login-panel__footer">
-          New here? <Link to="/register">Create an account</Link>
+          New here? <Link to={appRoutes.register}>Create an account</Link>
         </p>
       </section>
     </main>

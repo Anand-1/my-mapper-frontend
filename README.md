@@ -1,89 +1,192 @@
-# React + TypeScript + Vite
+# My Mapper Frontend
 
-## Tealium
+My Mapper is a React, TypeScript, and Vite frontend for collecting dated ideas, signing users in, viewing an admin dashboard, opening tool pages, and sending Tealium page-view events on client-side route changes.
 
-Tag management is wired through Tealium iQ. Configure it with Vite environment variables:
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run test:e2e
+npm run preview
+```
+
+## Environment
+
+Create a local `.env` from `.env.example` and fill in the values needed by your environment.
 
 ```env
+VITE_API_BASE_URL=http://127.0.0.1:5000
+VITE_ADMIN_USERNAME=admin
+VITE_ADMIN_PASSWORD=admin123
+VITE_ROUTER_BASE=/
+
 VITE_TEALIUM_ACCOUNT=your-account
 VITE_TEALIUM_PROFILE=your-profile
 VITE_TEALIUM_ENVIRONMENT=dev
 VITE_TEALIUM_ENABLED=true
 ```
 
-When `VITE_TEALIUM_ACCOUNT` and `VITE_TEALIUM_PROFILE` are set, the app loads `utag.js` and sends a `page_view` event on each React Router navigation. Use `trackTealiumEvent` from `src/services/tealiumService.ts` for custom link/event tracking.
+`VITE_ROUTER_BASE` defaults to `/` during local development. Production builds use the Vite base path for GitHub Pages unless this value is overridden.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Application Flow
 
-Currently, two official plugins are available:
+```mermaid
+flowchart TD
+  Browser[Browser] --> Vite[Vite app shell]
+  Vite --> Router[BrowserRouter]
+  Router --> App[App]
+  App --> TealiumTracker[TealiumRouteTracker]
+  App --> Nav[AppNav]
+  App --> Routes[Route table]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+  Routes --> Home["/ - HomePage"]
+  Routes --> Landing["/landing - LandingPage"]
+  Routes --> Login["/login - LoginPage"]
+  Routes --> Register["/register - RegisterPage"]
+  Routes --> Dashboard["/dashboard - AdminLandingPage"]
+  Routes --> Tools["/tools - ToolsPage"]
+  Routes --> LegacyHome["/home - redirect to /"]
+  Routes --> LegacyTools["/further - redirect to /tools"]
+  Routes --> NotFound["* - redirect to /"]
 
-## React Compiler
+  Home --> InputHook[useHomeInputs]
+  InputHook --> InputService[inputService]
+  InputService --> InputsApi["API: /inputs"]
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+  Login --> LoginHook[useLoginPage]
+  Register --> RegisterHook[useRegisterPage]
+  Dashboard --> AdminHook[useAdminLandingPage]
+  Nav --> NavHook[useAppNav]
 
-Note: This will impact Vite dev & build performances.
+  LoginHook --> AuthService[authService]
+  RegisterHook --> AuthService
+  AdminHook --> AuthService
+  NavHook --> AuthService
+  AuthService --> AuthApi["API: /auth/login, /auth/register, /auth/me, /auth/logout"]
+  AuthService --> LocalStorage[localStorage admin session]
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+  TealiumTracker --> TealiumService[tealiumService]
+  TealiumService --> TealiumCdn["Tealium iQ utag.js"]
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Dependency Flow
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```mermaid
+flowchart LR
+  Source[src] --> React[react]
+  Source --> ReactDom[react-dom]
+  Source --> Router[react-router-dom]
+  Source --> Formik[formik]
+  Source --> DatePicker[react-datepicker]
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+  ReactDom --> BrowserDom[Browser DOM]
+  Router --> ClientRoutes[Client-side routing]
+  Formik --> LoginForms[Login and register forms]
+  DatePicker --> HomeDate[Home date input]
+
+  Source --> Config[services/config.ts]
+  Config --> Env[Vite env vars]
+  Config --> ApiBase[VITE_API_BASE_URL]
+  Config --> TealiumEnv[Tealium env vars]
+
+  Config --> AuthService[authService.ts]
+  Config --> InputService[inputService.ts]
+  Config --> TealiumService[tealiumService.ts]
+
+  AuthService --> BackendAuth[Backend auth endpoints]
+  InputService --> BackendInputs[Backend input endpoints]
+  TealiumService --> Utag[window.utag]
+
+  Build[Vite build] --> TypeScript[typescript]
+  Build --> ReactCompiler[babel-plugin-react-compiler]
+  Lint[ESLint] --> TypeScriptEslint[typescript-eslint]
+  E2E[Playwright] --> LocalVite[Vite dev server]
 ```
-        
+
+## Route Map
+
+| Route | Page | Notes |
+| --- | --- | --- |
+| `/` | `HomePage` | Main mapper page with saved ideas and date/input submission. |
+| `/landing` | `LandingPage` | Placeholder landing page. |
+| `/login` | `LoginPage` | Admin username/password and Google auth entry. |
+| `/register` | `RegisterPage` | Account registration form. |
+| `/dashboard` | `AdminLandingPage` | Session-checked admin landing page. |
+| `/tools` | `ToolsPage` | Tools and further components. |
+| `/home` | Redirect | Legacy path redirected to `/`. |
+| `/further` | Redirect | Legacy path redirected to `/tools`. |
+| `*` | Redirect | Unknown paths redirect to `/`. |
+
+Routes are centralized in `src/routes.ts`. Use `appRoutes` instead of hard-coded path strings when adding links, redirects, or navigation calls.
+
+## Tealium
+
+Tag management is wired through Tealium iQ.
+
+When `VITE_TEALIUM_ACCOUNT` and `VITE_TEALIUM_PROFILE` are set, the app loads:
+
+```text
+https://tags.tiqcdn.com/utag/{account}/{profile}/{environment}/utag.js
+```
+
+`TealiumRouteTracker` initializes Tealium once and sends a `page_view` event on every React Router navigation. Use `trackTealiumEvent` from `src/services/tealiumService.ts` for custom link or interaction tracking.
+
+## Data Flow
+
+```mermaid
+sequenceDiagram
+  participant User
+  participant Page
+  participant Hook
+  participant Service
+  participant API
+  participant Tealium
+
+  User->>Page: Navigate or submit form
+  Page->>Hook: Invoke page hook
+  Hook->>Service: Request auth or input data
+  Service->>API: fetch VITE_API_BASE_URL endpoint
+  API-->>Service: JSON response
+  Service-->>Hook: Typed data or error
+  Hook-->>Page: Render state
+  Page-->>User: Updated UI
+  Page->>Tealium: Route tracker sends page_view
+```
+
+## Project Structure
+
+```text
+src/
+  components/
+    AppNav/
+    ProgressSideBar/
+    TealiumRouteTracker/
+  hooks/
+  pages/
+    AdminLanding/
+    Home/
+    Landing/
+    Login/
+    Register/
+    Tools/
+  services/
+    authService.ts
+    config.ts
+    inputService.ts
+    tealiumService.ts
+  routes.ts
+  App.tsx
+  main.tsx
+```
+
+## Verification
+
+Use these commands before shipping route, auth, or tracking changes:
+
+```bash
+npm run build
+npm run lint
+npm run test:e2e
+```

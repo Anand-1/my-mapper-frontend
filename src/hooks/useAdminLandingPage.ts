@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { appRoutes } from "../routes";
 import {
   getCurrentUser,
   getStoredAdmin,
@@ -36,7 +37,7 @@ export const useAdminLandingPage = () => {
         // The login page owns the visible auth error state.
       }
 
-      navigate("/login");
+      navigate(appRoutes.login);
     };
 
     loadSession();

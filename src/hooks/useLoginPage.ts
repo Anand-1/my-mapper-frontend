@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { appRoutes } from "../routes";
 import { apiBaseUrl } from "../services/config";
 import {
   getCurrentUser,
@@ -40,7 +41,7 @@ export const useLoginPage = () => {
 
         setAuthenticatedUser(user);
         setAuthLookupError("");
-        navigate("/dashboard");
+        navigate(appRoutes.dashboard);
       } catch {
         setAuthLookupError("Signed in, but the session could not be verified.");
       }
@@ -77,7 +78,7 @@ export const useLoginPage = () => {
           password: formik.values.password
         });
 
-        navigate("/dashboard");
+        navigate(appRoutes.dashboard);
       } catch (error) {
         setLoginError(
           error instanceof Error

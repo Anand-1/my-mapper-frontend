@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { appRoutes } from "../routes";
 import { registerUser } from "../services/authService";
 
 type RegisterFormValues = {
@@ -60,7 +61,7 @@ export const useRegisterPage = () => {
           password: values.password,
         });
 
-        navigate("/dashboard");
+        navigate(appRoutes.dashboard);
       } catch (error) {
         setRegisterError(
           error instanceof Error

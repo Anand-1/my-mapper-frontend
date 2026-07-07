@@ -3,10 +3,10 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
-   base: '/my-mapper-frontend/',
-})
+  base: mode === 'production' ? '/my-mapper-frontend/' : '/',
+}))
